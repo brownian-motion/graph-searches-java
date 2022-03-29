@@ -1,4 +1,6 @@
-package searches;
+package searches.answers;
+
+import searches.BreadthFirstSearch;
 
 import java.util.*;
 

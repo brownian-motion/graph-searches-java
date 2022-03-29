@@ -1,4 +1,4 @@
-package searches;
+package searches.answers;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class BreadthFirstSearchTest {
+public class BreadthFirstSearch_AnswerKeyTest {
 
     @ParameterizedTest
     @MethodSource("getBreadthFirstSearches")
@@ -30,13 +30,13 @@ public class BreadthFirstSearchTest {
 
     static GraphSearchTestCase[] getBreadthFirstSearches() {
         return new GraphSearchTestCase[]{
-                new GraphSearchTestCase("empty graph always returns an empty list or null", new BreadthFirstSearch(),
+                new GraphSearchTestCase("empty graph always returns an empty list or null", new BreadthFirstSearch_AnswerKey(),
                         new SearchResult(1, 2, Collections.emptyList()),
                         new SearchResult(2, 1, Collections.emptyList()),
                         new SearchResult(5, 1, Collections.emptyList())
                 ),
                 new GraphSearchTestCase("straight line",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(2, 3)
                                 .addEdge(3, 4),
@@ -53,13 +53,13 @@ public class BreadthFirstSearchTest {
                         // this is definitely enough for now!
                 ),
                 new GraphSearchTestCase("every node can reach itself without moving",
-                        new BreadthFirstSearch(/* empty! */),
+                        new BreadthFirstSearch_AnswerKey(/* empty! */),
                         new SearchResult(1, 1, List.of(1)),
                         new SearchResult(2, 2, List.of(2))
                         // you get the idea. We don't need to check for more of the same thing!
                 ),
                 new GraphSearchTestCase("search through a small graph",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -82,7 +82,7 @@ public class BreadthFirstSearchTest {
                 ),
 
                 new GraphSearchTestCase("search through a medium graph",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -112,7 +112,6 @@ public class BreadthFirstSearchTest {
         };
     }
 
-
     @ParameterizedTest
     @MethodSource("getReachEveryNodeTestCases")
     void canReachEveryNode(CanReachEveryNodeTestCase testCase) {
@@ -125,11 +124,11 @@ public class BreadthFirstSearchTest {
 
     static CanReachEveryNodeTestCase[] getReachEveryNodeTestCases() {
         return new CanReachEveryNodeTestCase[]{
-                new CanReachEveryNodeTestCase("empty graph", new BreadthFirstSearch(), Collections.emptySet(), false),
-                new CanReachEveryNodeTestCase("singleton graph", new BreadthFirstSearch(), Set.of(1), true),
-                new CanReachEveryNodeTestCase("unconnected graph", new BreadthFirstSearch(), Set.of(1, 2, 3, 4), false),
+                new CanReachEveryNodeTestCase("empty graph", new BreadthFirstSearch_AnswerKey(), Collections.emptySet(), false),
+                new CanReachEveryNodeTestCase("singleton graph", new BreadthFirstSearch_AnswerKey(), Set.of(1), true),
+                new CanReachEveryNodeTestCase("unconnected graph", new BreadthFirstSearch_AnswerKey(), Set.of(1, 2, 3, 4), false),
                 new CanReachEveryNodeTestCase("straight line",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(2, 3)
                                 .addEdge(3, 4),
@@ -137,7 +136,7 @@ public class BreadthFirstSearchTest {
                         true
                 ),
                 new CanReachEveryNodeTestCase("small graph",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -157,7 +156,7 @@ public class BreadthFirstSearchTest {
                 ),
 
                 new CanReachEveryNodeTestCase("medium interconnected graph",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -181,7 +180,7 @@ public class BreadthFirstSearchTest {
                 ),
 
                 new CanReachEveryNodeTestCase("small disjoint graph",
-                        new BreadthFirstSearch()
+                        new BreadthFirstSearch_AnswerKey()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
