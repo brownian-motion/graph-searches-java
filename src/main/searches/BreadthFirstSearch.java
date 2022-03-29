@@ -6,6 +6,12 @@ import graphs.UnweightedUndirectedAdjListGraph;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Breadth-first searches are very efficient, but only work for unweighted graphs.
+ * Implement the two marked methods below,
+ * {@link #breadthFirstSearch(int, int)} and {@link #canReachEveryNode(int, Set)},
+ * so that all the tests in {@code BreadthFirstSearchTest} pass.
+ */
 public class BreadthFirstSearch extends UnweightedUndirectedAdjListGraph implements SearchableGraph {
 
     // this method only exists so that I can write tests super easily
