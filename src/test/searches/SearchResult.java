@@ -1,4 +1,4 @@
-package searches.answers;
+package searches;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package searches.answers;
+package searches;
 
 import graphs.SearchableGraph;
 
