@@ -10,6 +10,10 @@ public class WeightedDirectedAdjListGraph implements WeightedGraph<WeightedDirec
         return this;
     }
 
+    public WeightedDirectedAdjListGraph addUndirectedEdge(int source, int neighbor, double weight) {
+        return addEdge(source, neighbor, weight).addEdge(neighbor, source, weight);
+    }
+
     @Override
     public Set<WeightedEdge> getNeighbors(int node) {
         return Collections.unmodifiableSet(adjList.getOrDefault(node, Collections.emptySet()));
