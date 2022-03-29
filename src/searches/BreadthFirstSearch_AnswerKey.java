@@ -1,6 +1,8 @@
+package searches;
+
 import java.util.*;
 
-public class BreadthFirstSearch_AnswerKey extends UnweightedUndirectedAdjListGraph {
+public class BreadthFirstSearch_AnswerKey extends BreadthFirstSearch {
 
     // this method only exists so that I can write tests super easily
     @Override

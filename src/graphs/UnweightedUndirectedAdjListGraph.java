@@ -1,10 +1,9 @@
+package graphs;
+
 import java.util.*;
 
-public class UnweightedUndirectedAdjListGraph extends AbstractGraph {
+public class UnweightedUndirectedAdjListGraph implements UnweightedGraph<UnweightedUndirectedAdjListGraph> {
     private final Map<Integer, Set<Integer>> neighbors = new HashMap<>();
-
-    public UnweightedUndirectedAdjListGraph() {
-    }
 
     public UnweightedUndirectedAdjListGraph addEdge(int source, int neighbor) {
         neighbors.computeIfAbsent(source, HashSet::new).add(neighbor);
@@ -13,12 +12,7 @@ public class UnweightedUndirectedAdjListGraph extends AbstractGraph {
     }
 
     @Override
-    protected boolean isConnected(int source, int neighbor) {
-        return getNeighbors(source).contains(neighbor);
-    }
-
-    @Override
-    protected Set<Integer> getNeighbors(int node) {
+    public Set<Integer> getNeighbors(int node) {
         return Collections.unmodifiableSet(neighbors.getOrDefault(node, Collections.emptySet()));
     }
 

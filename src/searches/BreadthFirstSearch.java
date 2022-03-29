@@ -1,3 +1,7 @@
+package searches;
+
+import graphs.UnweightedUndirectedAdjListGraph;
+
 import java.util.List;
 import java.util.Set;
 
