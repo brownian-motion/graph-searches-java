@@ -1,7 +1,8 @@
 package searches;
 
-import graphs.SearchableGraph;
-import graphs.WeightedDirectedAdjListGraph;
+import graphs.GraphSearch;
+import graphs.ReachabilitySearch;
+import graphs.WeightedGraph;
 
 import java.util.List;
 import java.util.Set;
@@ -12,22 +13,7 @@ import java.util.Set;
  * {@link #dijkstrasSearch(int, int)} and {@link #canReachEveryNode(int, Set)},
  * so that all the tests in {@code BreadthFirstSearchTest} pass.
  */
-public class DijkstrasSearch extends WeightedDirectedAdjListGraph implements SearchableGraph {
-
-    // this method only exists so that I can write tests super easily
-    @Override
-    public DijkstrasSearch addEdge(int source, int neighbor, double weight) {
-        super.addEdge(source, neighbor, weight);
-        return this;
-    }
-
-    // this method only exists so that I can write tests super easily
-    @Override
-    public DijkstrasSearch addUndirectedEdge(int source, int neighbor, double weight) {
-        super.addUndirectedEdge(source, neighbor, weight);
-        return this;
-    }
-
+public record DijkstrasSearch(WeightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
     @Override
     public List<Integer> findShortestPath(int source, int dest) {
         return dijkstrasSearch(source, dest);

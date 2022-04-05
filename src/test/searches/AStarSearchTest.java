@@ -1,5 +1,6 @@
 package searches;
 
+import graphs.WeightedDirectedAdjListGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,19 +28,21 @@ public class AStarSearchTest {
 
     static GraphSearchTestCase[] getDijkstrasSearchTestCases() {
         return new GraphSearchTestCase[]{
-                new GraphSearchTestCase("empty graph always returns an empty list or null", new AStarSearch((a, b) -> Double.POSITIVE_INFINITY),
+                new GraphSearchTestCase("empty graph always returns an empty list or null", new AStarSearch((a, b) -> Double.POSITIVE_INFINITY, new WeightedDirectedAdjListGraph()),
                         new SearchResult(1, 2, Collections.emptyList()),
                         new SearchResult(2, 1, Collections.emptyList()),
                         new SearchResult(5, 1, Collections.emptyList())
                 ),
                 new GraphSearchTestCase("straight line",
-                        new AStarSearch((a, b) -> 0.0 /* we must always underestimate */)
-                                .addEdge(1, 2, 2.0)
-                                .addEdge(2, 1, 1.0)
-                                .addEdge(2, 3, 3.0)
-                                .addEdge(3, 2, 0.0)
-                                .addEdge(3, 4, 0.5)
-                                .addEdge(4, 3, 5.0),
+                        new AStarSearch((a, b) -> 0.0 /* we must always underestimate */,
+                                new WeightedDirectedAdjListGraph()
+                                        .addEdge(1, 2, 2.0)
+                                        .addEdge(2, 1, 1.0)
+                                        .addEdge(2, 3, 3.0)
+                                        .addEdge(3, 2, 0.0)
+                                        .addEdge(3, 4, 0.5)
+                                        .addEdge(4, 3, 5.0)
+                        ),
                         new SearchResult(1, 4, Arrays.asList(1, 2, 3, 4)),
                         new SearchResult(4, 1, Arrays.asList(4, 3, 2, 1)),
                         new SearchResult(1, 3, Arrays.asList(1, 2, 3)),
@@ -53,24 +56,25 @@ public class AStarSearchTest {
                         // this is definitely enough for now!
                 ),
                 new GraphSearchTestCase("every node can reach itself without moving",
-                        new AStarSearch((a, b) -> Double.POSITIVE_INFINITY),
+                        new AStarSearch((a, b) -> Double.POSITIVE_INFINITY, new WeightedDirectedAdjListGraph()),
                         new SearchResult(1, 1, List.of(1)),
                         new SearchResult(2, 2, List.of(2))
                         // you get the idea. We don't need to check for more of the same thing!
                 ),
                 new GraphSearchTestCase("search through a small undirected graph",
                         // taken from https://commons.wikimedia.org/wiki/File:Dijkstra_Animation.gif
-                        new AStarSearch((a, b) -> Math.abs(b - a))
-                                .addUndirectedEdge(1, 2, 7.0)
-                                .addUndirectedEdge(1, 3, 9.0)
-                                .addUndirectedEdge(1, 6, 14.0)
-                                .addUndirectedEdge(2, 3, 10.0)
-                                .addUndirectedEdge(2, 4, 15.0)
-                                .addUndirectedEdge(3, 6, 2.0)
-                                .addUndirectedEdge(3, 4, 11.0)
-                                .addUndirectedEdge(4, 5, 6.0)
-                                .addUndirectedEdge(6, 5, 9.0),
-
+                        new AStarSearch((a, b) -> Math.abs(b - a),
+                                new WeightedDirectedAdjListGraph()
+                                        .addUndirectedEdge(1, 2, 7.0)
+                                        .addUndirectedEdge(1, 3, 9.0)
+                                        .addUndirectedEdge(1, 6, 14.0)
+                                        .addUndirectedEdge(2, 3, 10.0)
+                                        .addUndirectedEdge(2, 4, 15.0)
+                                        .addUndirectedEdge(3, 6, 2.0)
+                                        .addUndirectedEdge(3, 4, 11.0)
+                                        .addUndirectedEdge(4, 5, 6.0)
+                                        .addUndirectedEdge(6, 5, 9.0)
+                        ),
                         new SearchResult(1, 5, List.of(1, 3, 6, 5)),
                         new SearchResult(5, 1, List.of(5, 6, 3, 1)),
                         new SearchResult(4, 2, List.of(4, 2)),
@@ -98,14 +102,16 @@ public class AStarSearchTest {
                                 assert goal == 10;
                                 return estimatesToNodeTen.get(source);
                             }
-                        })
-                                .addUndirectedEdge(0, 1, 1.5)
-                                .addUndirectedEdge(1, 2, 2.0)
-                                .addUndirectedEdge(2, 3, 3.0)
-                                .addUndirectedEdge(3, 10, 4.0)
-                                .addUndirectedEdge(0, 4, 2.0)
-                                .addUndirectedEdge(4, 5, 3.0)
-                                .addUndirectedEdge(5, 10, 2.0),
+                        },
+                                new WeightedDirectedAdjListGraph()
+                                        .addUndirectedEdge(0, 1, 1.5)
+                                        .addUndirectedEdge(1, 2, 2.0)
+                                        .addUndirectedEdge(2, 3, 3.0)
+                                        .addUndirectedEdge(3, 10, 4.0)
+                                        .addUndirectedEdge(0, 4, 2.0)
+                                        .addUndirectedEdge(4, 5, 3.0)
+                                        .addUndirectedEdge(5, 10, 2.0)
+                        ),
 
                         new SearchResult(0, 10, List.of(0, 4, 5, 10))
                 ),

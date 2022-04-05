@@ -1,5 +1,5 @@
 package searches;
 
-import graphs.SearchableGraph;
+import graphs.GraphSearch;
 
-public record GraphSearchTestCase(String name, SearchableGraph graph, SearchResult... searches) {}
+public record GraphSearchTestCase(String name, GraphSearch graph, SearchResult... searches) {}

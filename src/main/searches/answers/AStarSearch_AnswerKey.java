@@ -1,34 +1,16 @@
 package searches.answers;
 
-import graphs.SearchableGraph;
-import graphs.WeightedDirectedAdjListGraph;
+import graphs.GraphSearch;
+import graphs.ReachabilitySearch;
 import graphs.WeightedEdge;
+import graphs.WeightedGraph;
 import searches.AStarDistanceEstimator;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AStarSearch_AnswerKey extends WeightedDirectedAdjListGraph implements SearchableGraph {
-
-    private final AStarDistanceEstimator estimator;
-
-    public AStarSearch_AnswerKey(AStarDistanceEstimator estimator) {
-        this.estimator = estimator;
-    }
-
-    // this method only exists so that I can write tests super easily
-    @Override
-    public AStarSearch_AnswerKey addEdge(int source, int neighbor, double weight) {
-        super.addEdge(source, neighbor, weight);
-        return this;
-    }
-
-    // this method only exists so that I can write tests super easily
-    @Override
-    public AStarSearch_AnswerKey addUndirectedEdge(int source, int neighbor, double weight) {
-        super.addUndirectedEdge(source, neighbor, weight);
-        return this;
-    }
+public record AStarSearch_AnswerKey(AStarDistanceEstimator estimator,
+                                    WeightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
 
     @Override
     public List<Integer> findShortestPath(int source, int dest) {
@@ -62,7 +44,7 @@ public class AStarSearch_AnswerKey extends WeightedDirectedAdjListGraph implemen
             double costToCurrNode = bestPathSegments.get(currNode).totalCostToPoint;
 
             visited.add(currNode);
-            var edges = this.getNeighbors(currNode);
+            var edges = graph.getNeighbors(currNode);
             for (WeightedEdge edge : edges) {
                 int neighbor = edge.neighbor();
 
@@ -129,7 +111,7 @@ public class AStarSearch_AnswerKey extends WeightedDirectedAdjListGraph implemen
             int currNode = frontier.remove();
             visited.add(currNode);
 
-            Set<Integer> unvisitedNeighbors = this.getNeighbors(currNode).stream()
+            Set<Integer> unvisitedNeighbors = graph.getNeighbors(currNode).stream()
                     .map(WeightedEdge::neighbor)
                     .collect(Collectors.toSet());
             unvisitedNeighbors.removeAll(visited);

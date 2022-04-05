@@ -1,7 +1,8 @@
 package searches;
 
-import graphs.SearchableGraph;
-import graphs.UnweightedUndirectedAdjListGraph;
+import graphs.GraphSearch;
+import graphs.ReachabilitySearch;
+import graphs.UnweightedGraph;
 
 import java.util.List;
 import java.util.Set;
@@ -12,15 +13,7 @@ import java.util.Set;
  * {@link #breadthFirstSearch(int, int)} and {@link #canReachEveryNode(int, Set)},
  * so that all the tests in {@code BreadthFirstSearchTest} pass.
  */
-public class BreadthFirstSearch extends UnweightedUndirectedAdjListGraph implements SearchableGraph {
-
-    // this method only exists so that I can write tests super easily
-    @Override
-    public BreadthFirstSearch addEdge(int source, int neighbor) {
-        super.addEdge(source, neighbor);
-        return this;
-    }
-
+public record BreadthFirstSearch(UnweightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
     @Override
     public List<Integer> findShortestPath(int source, int dest) {
         return breadthFirstSearch(source, dest);

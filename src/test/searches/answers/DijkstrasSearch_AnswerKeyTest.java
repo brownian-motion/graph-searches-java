@@ -1,5 +1,6 @@
 package searches.answers;
 
+import graphs.WeightedDirectedAdjListGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("NewClassNamingConvention")
 public class DijkstrasSearch_AnswerKeyTest {
 
     @ParameterizedTest
@@ -33,19 +35,20 @@ public class DijkstrasSearch_AnswerKeyTest {
 
     static GraphSearchTestCase[] getDijkstrasSearchTestCases() {
         return new GraphSearchTestCase[]{
-                new GraphSearchTestCase("empty graph always returns an empty list or null", new DijkstrasSearch_AnswerKey(),
+                new GraphSearchTestCase("empty graph always returns an empty list or null", new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()),
                         new SearchResult(1, 2, Collections.emptyList()),
                         new SearchResult(2, 1, Collections.emptyList()),
                         new SearchResult(5, 1, Collections.emptyList())
                 ),
                 new GraphSearchTestCase("straight line",
-                        new DijkstrasSearch_AnswerKey()
+                        new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()
                                 .addEdge(1, 2, 2.0)
                                 .addEdge(2, 1, 1.0)
                                 .addEdge(2, 3, 3.0)
                                 .addEdge(3, 2, 0.0)
                                 .addEdge(3, 4, 0.5)
-                                .addEdge(4, 3, 5.0),
+                                .addEdge(4, 3, 5.0)
+                        ),
                         new SearchResult(1, 4, Arrays.asList(1, 2, 3, 4)),
                         new SearchResult(4, 1, Arrays.asList(4, 3, 2, 1)),
                         new SearchResult(1, 3, Arrays.asList(1, 2, 3)),
@@ -59,14 +62,14 @@ public class DijkstrasSearch_AnswerKeyTest {
                         // this is definitely enough for now!
                 ),
                 new GraphSearchTestCase("every node can reach itself without moving",
-                        new DijkstrasSearch_AnswerKey(/* empty! */),
+                        new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()),
                         new SearchResult(1, 1, List.of(1)),
                         new SearchResult(2, 2, List.of(2))
                         // you get the idea. We don't need to check for more of the same thing!
                 ),
                 new GraphSearchTestCase("search through a small undirected graph",
                         // taken from https://commons.wikimedia.org/wiki/File:Dijkstra_Animation.gif
-                        new DijkstrasSearch_AnswerKey()
+                        new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()
                                 .addUndirectedEdge(1, 2, 7.0)
                                 .addUndirectedEdge(1, 3, 9.0)
                                 .addUndirectedEdge(1, 6, 14.0)
@@ -75,7 +78,8 @@ public class DijkstrasSearch_AnswerKeyTest {
                                 .addUndirectedEdge(3, 6, 2.0)
                                 .addUndirectedEdge(3, 4, 11.0)
                                 .addUndirectedEdge(4, 5, 6.0)
-                                .addUndirectedEdge(6, 5, 9.0),
+                                .addUndirectedEdge(6, 5, 9.0)
+                        ),
 
                         new SearchResult(1, 5, List.of(1, 3, 6, 5)),
                         new SearchResult(5, 1, List.of(5, 6, 3, 1)),
@@ -100,23 +104,24 @@ public class DijkstrasSearch_AnswerKeyTest {
 
     static CanReachEveryNodeTestCase[] getReachEveryNodeTestCases() {
         return new CanReachEveryNodeTestCase[]{
-                new CanReachEveryNodeTestCase("empty graph", new DijkstrasSearch_AnswerKey(), Collections.emptySet(), false),
-                new CanReachEveryNodeTestCase("singleton graph", new DijkstrasSearch_AnswerKey(), Set.of(1), true),
-                new CanReachEveryNodeTestCase("unconnected graph", new DijkstrasSearch_AnswerKey(), Set.of(1, 2, 3, 4), false),
+                new CanReachEveryNodeTestCase("empty graph", new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()), Collections.emptySet(), false),
+                new CanReachEveryNodeTestCase("singleton graph", new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()), Set.of(1), true),
+                new CanReachEveryNodeTestCase("unconnected graph", new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()), Set.of(1, 2, 3, 4), false),
                 new CanReachEveryNodeTestCase("straight line",
-                        new DijkstrasSearch_AnswerKey()
+                        new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()
                                 .addEdge(1, 2, 2.0)
                                 .addEdge(2, 1, 1.0)
                                 .addEdge(2, 3, 3.0)
                                 .addEdge(3, 2, 0.0)
                                 .addEdge(3, 4, 0.5)
-                                .addEdge(4, 3, 5.0),
+                                .addEdge(4, 3, 5.0)
+                        ),
                         Set.of(1, 2, 3, 4),
                         true
                 ),
                 new CanReachEveryNodeTestCase("small graph",
                         // taken from https://commons.wikimedia.org/wiki/File:Dijkstra_Animation.gif
-                        new DijkstrasSearch_AnswerKey()
+                        new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()
                                 .addUndirectedEdge(1, 2, 7.0)
                                 .addUndirectedEdge(1, 3, 9.0)
                                 .addUndirectedEdge(1, 6, 14.0)
@@ -125,7 +130,8 @@ public class DijkstrasSearch_AnswerKeyTest {
                                 .addUndirectedEdge(3, 6, 2.0)
                                 .addUndirectedEdge(3, 4, 11.0)
                                 .addUndirectedEdge(4, 5, 6.0)
-                                .addUndirectedEdge(6, 5, 9.0),
+                                .addUndirectedEdge(6, 5, 9.0)
+                        ),
                         //    1
                         //   / \
                         //  2---3
@@ -136,12 +142,13 @@ public class DijkstrasSearch_AnswerKeyTest {
                 ),
 
                 new CanReachEveryNodeTestCase("small disjoint graph",
-                        new DijkstrasSearch_AnswerKey()
+                        new DijkstrasSearch_AnswerKey(new WeightedDirectedAdjListGraph()
                                 .addEdge(1, 2, 0.0)
                                 .addEdge(3, 1, 1.0)
                                 .addEdge(2, 3, 3.5)
                                 .addUndirectedEdge(4, 5, 2.0)
-                                .addUndirectedEdge(5, 6, 2.0),
+                                .addUndirectedEdge(5, 6, 2.0)
+                        ),
                         // 1 --> 2  4-5-6
                         //  <-3<-/
                         Set.of(1, 2, 3, 4, 5, 6),

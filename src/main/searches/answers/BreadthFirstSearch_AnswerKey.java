@@ -1,16 +1,15 @@
 package searches.answers;
 
-import searches.BreadthFirstSearch;
+import graphs.GraphSearch;
+import graphs.ReachabilitySearch;
+import graphs.UnweightedGraph;
 
 import java.util.*;
 
-public class BreadthFirstSearch_AnswerKey extends BreadthFirstSearch {
+public record BreadthFirstSearch_AnswerKey(UnweightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
 
-    // this method only exists so that I can write tests super easily
-    @Override
-    public BreadthFirstSearch_AnswerKey addEdge(int source, int neighbor) {
-        super.addEdge(source, neighbor);
-        return this;
+    public List<Integer> findShortestPath(int source, int dest) {
+        return breadthFirstSearch(source, dest);
     }
 
     public List<Integer> breadthFirstSearch(int source, int dest) {
@@ -29,7 +28,7 @@ public class BreadthFirstSearch_AnswerKey extends BreadthFirstSearch {
             }
 
             visited.add(currNode);
-            var neighbors = this.getNeighbors(currNode);
+            var neighbors = graph.getNeighbors(currNode);
             for (int neighbor : neighbors) {
                 // if we visited it, we don't need to re-compute a path to it again
                 if (visited.contains(neighbor)) continue;
@@ -74,7 +73,7 @@ public class BreadthFirstSearch_AnswerKey extends BreadthFirstSearch {
         while (!frontier.isEmpty()) {
             int currNode = frontier.remove();
             visited.add(currNode);
-            Set<Integer> neighbors = this.getNeighbors(currNode);
+            Set<Integer> neighbors = graph.getNeighbors(currNode);
 
             Set<Integer> unvisitedNeighbors = new HashSet<>(neighbors);
             unvisitedNeighbors.removeAll(visited);

@@ -1,5 +1,6 @@
 package searches.answers;
 
+import graphs.UnweightedUndirectedAdjListGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("NewClassNamingConvention")
 public class BreadthFirstSearch_AnswerKeyTest {
 
     @ParameterizedTest
@@ -33,16 +35,17 @@ public class BreadthFirstSearch_AnswerKeyTest {
 
     static GraphSearchTestCase[] getBreadthFirstSearches() {
         return new GraphSearchTestCase[]{
-                new GraphSearchTestCase("empty graph always returns an empty list or null", new BreadthFirstSearch_AnswerKey(),
+                new GraphSearchTestCase("empty graph always returns an empty list or null", new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()),
                         new SearchResult(1, 2, Collections.emptyList()),
                         new SearchResult(2, 1, Collections.emptyList()),
                         new SearchResult(5, 1, Collections.emptyList())
                 ),
                 new GraphSearchTestCase("straight line",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(2, 3)
-                                .addEdge(3, 4),
+                                .addEdge(3, 4)
+                        ),
                         new SearchResult(1, 4, Arrays.asList(1, 2, 3, 4)),
                         new SearchResult(4, 1, Arrays.asList(4, 3, 2, 1)),
                         new SearchResult(1, 3, Arrays.asList(1, 2, 3)),
@@ -56,13 +59,13 @@ public class BreadthFirstSearch_AnswerKeyTest {
                         // this is definitely enough for now!
                 ),
                 new GraphSearchTestCase("every node can reach itself without moving",
-                        new BreadthFirstSearch_AnswerKey(/* empty! */),
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()),
                         new SearchResult(1, 1, List.of(1)),
                         new SearchResult(2, 2, List.of(2))
                         // you get the idea. We don't need to check for more of the same thing!
                 ),
                 new GraphSearchTestCase("search through a small graph",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -71,7 +74,8 @@ public class BreadthFirstSearch_AnswerKeyTest {
                                 .addEdge(2, 5)
                                 .addEdge(4, 5)
                                 .addEdge(3, 6)
-                                .addEdge(5, 6),
+                                .addEdge(5, 6)
+                        ),
                         //    1
                         //   / \
                         //  2---3
@@ -85,7 +89,7 @@ public class BreadthFirstSearch_AnswerKeyTest {
                 ),
 
                 new GraphSearchTestCase("search through a medium graph",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -96,7 +100,8 @@ public class BreadthFirstSearch_AnswerKeyTest {
                                 .addEdge(3, 6)
                                 .addEdge(5, 6)
                                 .addEdge(5, 7)
-                                .addEdge(3, 7),
+                                .addEdge(3, 7)
+                        ),
                         //    1
                         //   / \
                         //  2---3
@@ -127,19 +132,20 @@ public class BreadthFirstSearch_AnswerKeyTest {
 
     static CanReachEveryNodeTestCase[] getReachEveryNodeTestCases() {
         return new CanReachEveryNodeTestCase[]{
-                new CanReachEveryNodeTestCase("empty graph", new BreadthFirstSearch_AnswerKey(), Collections.emptySet(), false),
-                new CanReachEveryNodeTestCase("singleton graph", new BreadthFirstSearch_AnswerKey(), Set.of(1), true),
-                new CanReachEveryNodeTestCase("unconnected graph", new BreadthFirstSearch_AnswerKey(), Set.of(1, 2, 3, 4), false),
+                new CanReachEveryNodeTestCase("empty graph", new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()), Collections.emptySet(), false),
+                new CanReachEveryNodeTestCase("singleton graph", new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()), Set.of(1), true),
+                new CanReachEveryNodeTestCase("unconnected graph", new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()), Set.of(1, 2, 3, 4), false),
                 new CanReachEveryNodeTestCase("straight line",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(2, 3)
-                                .addEdge(3, 4),
+                                .addEdge(3, 4)
+                        ),
                         Set.of(1, 2, 3, 4),
                         true
                 ),
                 new CanReachEveryNodeTestCase("small graph",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -148,7 +154,8 @@ public class BreadthFirstSearch_AnswerKeyTest {
                                 .addEdge(2, 5)
                                 .addEdge(4, 5)
                                 .addEdge(3, 6)
-                                .addEdge(5, 6),
+                                .addEdge(5, 6)
+                        ),
                         //    1
                         //   / \
                         //  2---3
@@ -159,7 +166,7 @@ public class BreadthFirstSearch_AnswerKeyTest {
                 ),
 
                 new CanReachEveryNodeTestCase("medium interconnected graph",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
@@ -170,7 +177,8 @@ public class BreadthFirstSearch_AnswerKeyTest {
                                 .addEdge(3, 6)
                                 .addEdge(5, 6)
                                 .addEdge(5, 7)
-                                .addEdge(3, 7),
+                                .addEdge(3, 7)
+                        ),
                         //    1
                         //   / \
                         //  2---3
@@ -183,12 +191,13 @@ public class BreadthFirstSearch_AnswerKeyTest {
                 ),
 
                 new CanReachEveryNodeTestCase("small disjoint graph",
-                        new BreadthFirstSearch_AnswerKey()
+                        new BreadthFirstSearch_AnswerKey(new UnweightedUndirectedAdjListGraph()
                                 .addEdge(1, 2)
                                 .addEdge(1, 3)
                                 .addEdge(2, 3)
                                 .addEdge(4, 5)
-                                .addEdge(5, 6),
+                                .addEdge(5, 6)
+                        ),
                         // 1 --- 2  4-5-6
                         //  \-3-/
                         Set.of(1, 2, 3, 4, 5, 6),
