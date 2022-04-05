@@ -2,7 +2,7 @@ package graphs;
 
 import java.util.*;
 
-public class UnweightedUndirectedAdjListGraph implements UnweightedGraph<UnweightedUndirectedAdjListGraph> {
+public class UnweightedUndirectedAdjListGraph implements UnweightedGraphBuilder<UnweightedUndirectedAdjListGraph>, UnweightedGraph {
     private final Map<Integer, Set<Integer>> neighbors = new HashMap<>();
 
     public UnweightedUndirectedAdjListGraph addEdge(int source, int neighbor) {

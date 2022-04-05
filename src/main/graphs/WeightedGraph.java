@@ -2,7 +2,9 @@ package graphs;
 
 import java.util.Set;
 
-public interface WeightedGraph<G extends WeightedGraph<G>> {
+public interface WeightedGraph {
+    Set<WeightedEdge> getNeighbors(int source);
+
     default boolean isConnected(int source, int neighbor) {
         return getNeighbors(source).stream().anyMatch(edge -> edge.neighbor() == neighbor);
     }
@@ -14,7 +16,4 @@ public interface WeightedGraph<G extends WeightedGraph<G>> {
                 .findAny().orElse(Double.POSITIVE_INFINITY); // it is an infinite cost to travel on a path that's not allowed!
     }
 
-    Set<WeightedEdge> getNeighbors(int node);
-
-    G addEdge(int source, int dest, double weight);
 }

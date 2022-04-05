@@ -2,7 +2,7 @@ package graphs;
 
 import java.util.*;
 
-public class WeightedDirectedAdjListGraph implements WeightedGraph<WeightedDirectedAdjListGraph> {
+public class WeightedDirectedAdjListGraph implements WeightedGraphBuilder<WeightedDirectedAdjListGraph>, WeightedGraph {
     private final Map<Integer, Set<WeightedEdge>> adjList = new HashMap<>();
 
     public WeightedDirectedAdjListGraph addEdge(int source, int neighbor, double weight) {

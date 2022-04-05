@@ -13,7 +13,7 @@ import java.util.Set;
  * {@link #dijkstrasSearch(int, int)} and {@link #canReachEveryNode(int, Set)},
  * so that all the tests in {@code BreadthFirstSearchTest} pass.
  */
-public record DijkstrasSearch(WeightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
+public record DijkstrasSearch(WeightedGraph graph) implements GraphSearch, ReachabilitySearch {
     @Override
     public List<Integer> findShortestPath(int source, int dest) {
         return dijkstrasSearch(source, dest);

@@ -5,7 +5,7 @@ import graphs.WeightedGraph;
 
 import java.util.List;
 
-public record AStarSearch(AStarDistanceEstimator estimator, WeightedGraph<?> graph) implements GraphSearch {
+public record AStarSearch(AStarDistanceEstimator estimator, WeightedGraph graph) implements GraphSearch {
 
     @Override
     public List<Integer> findShortestPath(int source, int dest) {

@@ -6,7 +6,7 @@ import graphs.UnweightedGraph;
 
 import java.util.*;
 
-public record BreadthFirstSearch_AnswerKey(UnweightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
+public record BreadthFirstSearch_AnswerKey(UnweightedGraph graph) implements GraphSearch, ReachabilitySearch {
 
     public List<Integer> findShortestPath(int source, int dest) {
         return breadthFirstSearch(source, dest);

@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public record AStarSearch_AnswerKey(AStarDistanceEstimator estimator,
-                                    WeightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
+                                    WeightedGraph graph) implements GraphSearch, ReachabilitySearch {
 
     @Override
     public List<Integer> findShortestPath(int source, int dest) {

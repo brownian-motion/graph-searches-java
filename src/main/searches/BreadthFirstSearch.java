@@ -13,7 +13,7 @@ import java.util.Set;
  * {@link #breadthFirstSearch(int, int)} and {@link #canReachEveryNode(int, Set)},
  * so that all the tests in {@code BreadthFirstSearchTest} pass.
  */
-public record BreadthFirstSearch(UnweightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
+public record BreadthFirstSearch(UnweightedGraph graph) implements GraphSearch, ReachabilitySearch {
     @Override
     public List<Integer> findShortestPath(int source, int dest) {
         return breadthFirstSearch(source, dest);

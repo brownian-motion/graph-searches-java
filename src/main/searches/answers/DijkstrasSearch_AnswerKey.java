@@ -8,7 +8,7 @@ import graphs.WeightedGraph;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public record DijkstrasSearch_AnswerKey(WeightedGraph<?> graph) implements GraphSearch, ReachabilitySearch {
+public record DijkstrasSearch_AnswerKey(WeightedGraph graph) implements GraphSearch, ReachabilitySearch {
 
     @Override
     public List<Integer> findShortestPath(int source, int dest) {
